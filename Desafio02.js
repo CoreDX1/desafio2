@@ -7,33 +7,25 @@ class Contenedor {
   }
 
   async save(obj) {
-    if (archivo <= 1) {
-      try{
-        await fs.promises.writeFile(`./${this.nombre}`, JSON.stringify(obj), 'utf-8')
-        console.log('Se creo archivo')
-      }catch(err){
-        console.log('Error al crear el archivo')
-      }
-    }else{
-      try {
-        await fs.promises.appendFile(`./${this.nombre}`, JSON.stringify(obj),'utf-8')
-        console.log('Se agrego Contendio')
-      }catch(err){
-        console.log('Error al crear el archivo')
-      }
+    obj.forEach((o,i) => o['id'] = i);
+    try{ 
+      await fs.promises.writeFile(`./${this.nombre}`, JSON.stringify(obj))
+      console.log('Se Creo el archivo')
+    }catch{
+      console.log('Error al crear el archivo')
     }
-  }
-  
-  async readFile(){
+  } 
+
+  async getAll(){
     try{
       let read = await fs.promises.readFile(`./${this.nombre}`, 'utf-8')
-      console.log(read)
+      console.log(JSON.parse(read))
     }catch (err){
       console.log('Error al leer 3')
     }
   }
 
-  async daleteAll(){
+  async deleteAll(){
     try{
       await fs.promises.unlink(`./${this.nombre}`)
       console.log('Se borro el contendio')
@@ -75,23 +67,19 @@ archivo.save([
       title: 'Escuadra',                                                                                                                            
       price: 123.45,                                                                                                                                
       thumbnail: 'https://www.imagen.com/imagen1',                                
-      id: 1                                                                                                                                         
     },                                                                                                                                              
     {                                                                                                                                               
       title: 'Calculadora',                                                                                                                         
       price: 234.56,                                                                                                                                
       thumbnail: 'https://www.imagen.com/imagen2',                                     
-      id: 2                                                                                                                                         
     },                                                                                                                                              
     {                                                                                                                                               
       title: 'Globo Terráqueo',                                                                                                                     
       price: 345.67,                                                                                                                                
       thumbnail: 'https://www.imagen.com/imagen3',                              
-      id: 3                                                                                                                                         
     }                                                                                                                                               
   ]
 )
 
 // archivo.getById(2)
-
-archivo.deleteById()
+archivo.getAll()
