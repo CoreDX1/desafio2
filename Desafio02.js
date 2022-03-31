@@ -44,42 +44,43 @@ class Contenedor {
     }
   }
 
-  async deleteById(){
-    fs.readFile('./text.json', 'utf8', (err, data) => {
-      if (err) {
-        return console.log(err);
+  async deleteById(id){
+      try{
+        let data = await fs.promises.readFile(`./${this.nombre}`, 'utf-8')
+        let producto = JSON.parse(data).find(x => x.id == id)
+        console.log(producto)
+        fs.writeFileSync(`./${this.nombre}`, JSON.stringify(producto),(err) => {
+        if (err) throw err;
+        });
+        console.log("Archivo guardado correctamente.");
+      }catch{
+        console.log("Error al buscar el id")
       }
-      const result = data.replace(/string to be replaced/g, 'replacement');
-
-      fs.writeFile('./text.json', result, 'utf8', (err) => {
-        if (err) {
-          return console.log(err);
-        }
-      });
-    });
   }
 }
 
+
 let archivo = new Contenedor('text.json')
 
-archivo.save([                                                                                                                                                
-    {                                                                                                                                               
-      title: 'Escuadra',                                                                                                                            
-      price: 123.45,                                                                                                                                
-      thumbnail: 'https://www.imagen.com/imagen1',                                
-    },                                                                                                                                              
-    {                                                                                                                                               
-      title: 'Calculadora',                                                                                                                         
-      price: 234.56,                                                                                                                                
-      thumbnail: 'https://www.imagen.com/imagen2',                                     
-    },                                                                                                                                              
-    {                                                                                                                                               
-      title: 'Globo Terráqueo',                                                                                                                     
-      price: 345.67,                                                                                                                                
-      thumbnail: 'https://www.imagen.com/imagen3',                              
-    }                                                                                                                                               
+archivo.save([                                                                                                                                               
+    {                                                                                                                                              
+      title: 'Escuadra',                                                                                                                           
+      price: 123.45,                                                                                                                               
+      thumbnail: 'https://www.imagen.com/imagen1',                               
+    },                                                                                                                                             
+    {                                                                                                                                              
+      title: 'Calculadora',                                                                                                                        
+      price: 234.56,                                                                                                                               
+      thumbnail: 'https://www.imagen.com/imagen2',                                    
+    },                                                                                                                                             
+    {                                                                                                                                              
+      title: 'Globo Terráqueo',                                                                                                                    
+      price: 345.67,                                                                                                                               
+      thumbnail: 'https://www.imagen.com/imagen3',                             
+    }                                                                                                                                              
   ]
 )
 
 // archivo.getById(2)
 archivo.getAll()
+// archivo.deleteById(2)
