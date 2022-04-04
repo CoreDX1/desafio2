@@ -8,13 +8,13 @@ class Contenedor {
 
   async save(obj) {
     try{
-      // obj.forEach((o,i) => o['id'] = i + 0);
-      // let data = await fs.promises.readFile(`./${this.nombre}`, 'utf-8')
-      // let producto = JSON.parse(data)
-      // console.log(producto)
-      // console.log(producto.length)
-      await fs.promises.writeFile(`./${this.nombre}`, JSON.stringify(obj))
-      console.log('Se Creo el archivo')
+      let data = await fs.promises.readFile(`./${this.nombre}`, 'utf-8')
+      let producto = JSON.parse(data)
+      // let write = await fs.promises.writeFile(`./${this.nombre}`, JSON.stringify(obj), "utf-8")
+      let agregar = producto.push({Hola : "Mudno",price : 123})
+      await fs.promises.appendFile("./practica.json", JSON.stringify(producto), "utf-8")
+      console.log(producto)
+      // console.log(write)
     }catch{
       console.log("Error al crear el archivo")
     }
@@ -69,25 +69,25 @@ class Contenedor {
 
 let archivo = new Contenedor('practica.json')
 
-archivo.save([                                                                                                                                             
-    {                                                                                                                                           
-      title: 'Calcualdtoa',                                                                                                                        
-      price: 123.45,                                                                                                                           
-      thumbnail: 'https://www.imagen.com/imagen1',                           
-    },                                                                                                                                          
-    // {                                                                                                                                           
-    //   title: 'Calculadora',                                                                                                                     
-    //   // price: 234.56,                                                                                                                            
-    //   // thumbnail: 'https://www.imagen.com/imagen2',                                 
-    // },                                                                                                                                          
-    // {                                                                                                                                            
-    //   title: 'Globo Terráqueo',                                                                                                                  
-    //   price: 345.67,                                                                                                                             
-    //   thumbnail: 'https://www.imagen.com/imagen3',                           
-    // }                                                                                                                                            
+archivo.save([                                                                                                                                          
+    {                                                                                                                                        
+      title: 'zapadits',                                                                                                                     
+      price: 123.45,                                                                                                                        
+      thumbnail: 'https://www.imagen.com/imagen1',                        
+    },                                                                                                                                       
+    {                                                                                                                                       
+      title: 'Calculadora',                                                                                                                 
+      price: 234.56,                                                                                                                       
+      thumbnail: 'https://www.imagen.com/imagen2',                            
+    },                                                                                                                                      
+    {                                                                                                                                        
+      title: 'Globo Terráqueo',                                                                                                              
+      price: 345.67,                                                                                                                         
+      thumbnail: 'https://www.imagen.com/imagen3',                       
+    }                                                                                                                                        
   ]
 )
-
+// archivo.save()
 // archivo.getById(2)
 // archivo.getAll()
 // archivo.deleteById(0)
