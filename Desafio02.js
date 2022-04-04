@@ -7,7 +7,7 @@ class Contenedor {
   }
 
   async save(obj) {
-    obj.forEach((o,i) => o['id'] = i);
+    obj.forEach((o,i) => o['id'] = i + 0);
     try{ 
       await fs.promises.writeFile(`./${this.nombre}`, JSON.stringify(obj))
       console.log('Se Creo el archivo')
