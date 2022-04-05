@@ -11,7 +11,8 @@ class Contenedor {
       let data = await fs.promises.readFile(`./${this.nombre}`, 'utf-8')
       let producto = JSON.parse(data)
       producto.push(obj)
-      await fs.promises.writeFile(`./${this.nombre}`, JSON.stringify(obj), 'utf-8')
+      producto.forEach((o,i) => o['id'] = i + 0); 
+      await fs.promises.writeFile(`./${this.nombre}`, JSON.stringify(producto), 'utf-8')
       console.log(producto)
       
       // let items = this.getAll()
@@ -79,7 +80,7 @@ class Contenedor {
 
 let archivo = new Contenedor('practica.json')
 
-archivo.save([                                                                                                                                     
+archivo.save(                                                                                                                           
     {                                                                                                                                  
       title: 'Silla',                                                                                                               
       price: 400,                                                                                                                  
@@ -95,7 +96,6 @@ archivo.save([
     //   price: 345.67,                                                                                                                 
     //   thumbnail: 'https://www.imagen.com/imagen3',               
     // }                                                      
-]
 )
 // archivo.save()
 // archivo.getById(2)
