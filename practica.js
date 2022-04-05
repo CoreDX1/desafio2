@@ -2,19 +2,28 @@ const fs = require('fs');
 
 class Contenedor {
   constructor(nombre){
-    this.nombre = [nombre];
+    this.nombre = nombre;
     this.count = 0
   }
 
   async save(obj) {
     try{
-      let data = await fs.promises.readFile(`./${this.nombre}`, 'utf-8')
-      let producto = JSON.parse(data)
-      // let write = await fs.promises.writeFile(`./${this.nombre}`, JSON.stringify(obj), "utf-8")
-      let agregar = producto.push({Hola : "Mudno",price : 123})
-      await fs.promises.appendFile("./practica.json", JSON.stringify(producto), "utf-8")
-      console.log(producto)
-      // console.log(write)
+      let items = this.getAll
+      if ( items === "Error al leer") {
+        await fs.promises.writeFile(`./${this.nombre}`, JSON.stringify([]), 'utf-8')
+        console.log('Se crear el archivo')
+      }else{
+        let data = await fs.promises.readFile(`./${this.nombre}`, 'utf-8')
+        let producto = JSON.parse(data)
+        // producto.push({title: 'Hola'})
+        // await fs.promises.appendFile(`./${this.nombre}`, JSON.stringify(producto), "utf-8")
+        console.log(producto)
+      }
+      // let data = await fs.promises.readFile(`./${this.nombre}`, 'utf-8')
+      // let producto = JSON.parse(data)
+      // producto.push(obj)
+      // await fs.promises.writeFile(`./${this.nombre}`, JSON.stringify(obj), "utf-8")
+      // console.log(producto)
     }catch{
       console.log("Error al crear el archivo")
     }
@@ -26,7 +35,7 @@ class Contenedor {
       let read = await fs.promises.readFile(`./${this.nombre}`, 'utf-8')
       console.log(JSON.parse(read))
     }catch (err){
-      console.log('Error al leer 3')
+      console.log('Error al leer')
     }
   }
 
@@ -69,25 +78,25 @@ class Contenedor {
 
 let archivo = new Contenedor('practica.json')
 
-archivo.save([                                                                                                                                          
-    {                                                                                                                                        
-      title: 'zapadits',                                                                                                                     
-      price: 123.45,                                                                                                                        
-      thumbnail: 'https://www.imagen.com/imagen1',                        
-    },                                                                                                                                       
-    {                                                                                                                                       
-      title: 'Calculadora',                                                                                                                 
-      price: 234.56,                                                                                                                       
-      thumbnail: 'https://www.imagen.com/imagen2',                            
-    },                                                                                                                                      
-    {                                                                                                                                        
-      title: 'Globo Terráqueo',                                                                                                              
-      price: 345.67,                                                                                                                         
-      thumbnail: 'https://www.imagen.com/imagen3',                       
-    }                                                                                                                                        
-  ]
-)
-// archivo.save()
+// archivo.save(                                                                                                                                     
+//     {                                                                                                                                   
+//       title: 'Darks souls 5',                                                                                                                
+//       price: 300,                                                                                                                   
+//       thumbnail: 'https://www.imagen.com/imagen1',                   
+//     },                                                                                                                                  
+//     // {                                                                                                                                
+//     //   title: 'Calculadora',                                                                                                          
+//     //   price: 234.56,                                                                                                                
+//     //   thumbnail: 'https://www.imagen.com/imagen2',                     
+//     // },                                                                                                                               
+//     // {                                                                                                                                 
+//     //   title: 'Globo Terráqueo',                                                                                                       
+//     //   price: 345.67,                                                                                                                  
+//     //   thumbnail: 'https://www.imagen.com/imagen3',                
+//     // }                                                       
+//
+// )
+archivo.save()
 // archivo.getById(2)
 // archivo.getAll()
 // archivo.deleteById(0)
