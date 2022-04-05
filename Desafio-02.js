@@ -12,7 +12,7 @@ class Contenedor {
       let producto = JSON.parse(data)
       producto.push(obj)
       producto.forEach((o,i) => o['id'] = i + 0); 
-      await fs.promises.writeFile(`./${this.nombre}`, JSON.stringify(producto), 'utf-8')
+      await fs.promises.appendFile(`./${this.nombre}`, JSON.stringify(producto,null, 2), 'utf-8')
       console.log(producto)
       
       // let items = this.getAll()
