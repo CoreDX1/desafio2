@@ -1,14 +1,14 @@
 [
   {
-    "title": "Silla",
-    "price": 400,
-    "thumbnail": "https://www.imagen.com/imagen4",
-    "id": 0
-  },
-  {
-    "title": "Silla",
+    "title": "Silla 3",
     "price": 400,
     "thumbnail": "https://www.imagen.com/imagen4",
     "id": 1
+  },
+  {
+    "title": "Silla 3",
+    "price": 400,
+    "thumbnail": "https://www.imagen.com/imagen4",
+    "id": 2
   }
 ]

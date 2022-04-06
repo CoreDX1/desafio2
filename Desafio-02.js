@@ -3,31 +3,41 @@ const fs = require('fs');
 class Contenedor {
   constructor(nombre){
     this.nombre = nombre;
-    this.count = 0
   }
 
   async save(obj) {
+    let idDinamic 
     try{
       let data = await fs.promises.readFile(`./${this.nombre}`, 'utf-8')
       let producto = JSON.parse(data)
-      producto.push(obj)
-      producto.forEach((o,i) => o['id'] = i + 0); 
-      await fs.promises.appendFile(`./${this.nombre}`, JSON.stringify(producto,null, 2), 'utf-8')
-      console.log(producto)
+      if (data !== "") {
+        producto = JSON.parse(data)
+        let count = producto.length
+        obj.id = producto[count - 1].id + 1
+        producto.push(obj)
+      }else{
+        obj.id = 1
+        producto = [obj]
+      }
+
+
+      try{
+        await fs.promises.writeFile(`./${this.nombre}`, JSON.stringify(producto,null, 2), 'utf-8')
+        idDinamic = obj.id
+        console.log(producto)
+        console.log('Se agrego con exito el ID:' + idDinamic)
+      }catch (err){
+        throw err
+      }
       
-      // let items = this.getAll()
-      // if (items !== "undefined") {
-      //   await fs.promises.writeFile(`./${this.nombre}`, JSON.stringify([]), 'utf-8')
-      //   console.log('Se crear el archivo')
-      // }else{
-      //   let data = await fs.promises.readFile(`./${this.nombre}`, 'utf-8')
-      //   let producto = JSON.parse(data)
-      //   // producto.push({title: 'Hola'})
-      //   // await fs.promises.appendFile(`./${this.nombre}`, JSON.stringify(producto), "utf-8")
-      //   console.log(producto)
-      // }
-    }catch{
-      console.log("Error al crear el archivo")
+    }catch (err){
+      obj.id = 1
+      try{
+        await fs.promises.writeFile(`./${this.nombre}`, JSON.stringify([obj], null, 2), 'utf-8')
+        console.log('Se agrego con exito el ID:' + obj.id)
+      }catch{
+        throw err
+      }
     }
 
   } 
@@ -65,7 +75,6 @@ class Contenedor {
         let data = await fs.promises.readFile(`./${this.nombre}`, 'utf-8')
         let producto = JSON.parse(data)
         producto = producto.filter(i => i.id != id);
-        producto.forEach((o,i) => o['id'] = i + 0); 
         console.log(producto)
         fs.writeFileSync(`./${this.nombre}`, JSON.stringify(producto),(err) => {
         if (err) throw err;
@@ -82,7 +91,7 @@ let archivo = new Contenedor('practica.json')
 
 archivo.save(                                                                                                                           
     {                                                                                                                                  
-      title: 'Silla',                                                                                                               
+      title: 'Silla 3',                                                                                                               
       price: 400,                                                                                                                  
       thumbnail: 'https://www.imagen.com/imagen4',                  
     },                                                                                                                                 
